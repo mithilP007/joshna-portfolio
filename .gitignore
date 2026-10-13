@@ -1,0 +1,16 @@
+# Dependencies & Virtual Environments
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Large design files (GitHub blocks files > 100MB)
+*.pdf
+
+# OS & Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

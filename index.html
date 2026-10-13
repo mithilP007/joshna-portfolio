@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Joshna Christa S B | Fashion Design Portfolio</title>
+  <meta name="description" content="Portfolio of Joshna Christa S B - M.Sc. Fashion Design and Merchandising student, showcasing Graphic T-shirts, Casual Formal Shirts, Smart Casual, and Contemporary Urban Casualwear.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <!-- Fixed Sticky White Header -->
+  <header class="site-header" id="site-header">
+    <div class="header-container">
+      <a href="#about" class="header-brand" aria-label="Joshna Christa Portfolio Home">
+        <span class="header-brand-title">Joshna Christa</span>
+        <span class="header-brand-subtitle">Portfolio</span>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <nav class="navigation-menu desktop-nav" aria-label="Main Navigation">
+        <a href="#about" class="nav-link active-link">About me</a>
+        <a href="#graphic-tshirt" class="nav-link">Graphic Tshirt</a>
+        <a href="#casual-formal" class="nav-link">Casual formal shirt</a>
+        <a href="#smart-casual" class="nav-link">Smart casual</a>
+        <a href="#urban" class="nav-link">contemporary urban casualwear</a>
+      </nav>
+
+      <!-- Clean Hamburger Menu Icon for Mobile / Tablet -->
+      <button class="menu-toggle-btn" id="menu-toggle-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="drawer-menu">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Slide-out Drawer Overlay Menu (Mobile) -->
+  <div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
+
+  <aside class="drawer-menu" id="drawer-menu" aria-hidden="true" aria-label="Navigation drawer">
+    <div class="drawer-header">
+      <span class="drawer-heading">Portfolio Index</span>
+      <button class="drawer-close-btn" id="drawer-close-btn" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Drawer Navigation Links -->
+    <div class="drawer-nav">
+      <nav class="navigation-menu drawer-navigation" aria-label="Mobile Navigation">
+        <a href="#about" class="nav-link active-link">About me</a>
+        <a href="#graphic-tshirt" class="nav-link">Graphic Tshirt</a>
+        <a href="#casual-formal" class="nav-link">Casual formal shirt</a>
+        <a href="#smart-casual" class="nav-link">Smart casual</a>
+        <a href="#urban" class="nav-link">contemporary urban casualwear</a>
+      </nav>
+    </div>
+
+    <div class="drawer-footer">
+      <p>M.Sc. Fashion Design &amp; Merchandising</p>
+    </div>
+  </aside>
+
+  <!-- Main Content Container: 100% Viewport Width -->
+  <main class="content-container">
+
+    <!-- Slide 1: About me -->
+    <section id="about" class="page-section active-section" aria-label="About me">
+      <img 
+        src="images/page-1.png" 
+        alt="About me - Joshna Christa S B Portfolio Overview" 
+        loading="eager"
+        decoding="sync"
+      >
+    </section>
+
+    <!-- Slide 2: Graphic Tshirt -->
+    <section id="graphic-tshirt" class="page-section" aria-label="Graphic Tshirt">
+      <img 
+        src="images/page-2.png" 
+        alt="Graphic Tshirt Collection" 
+        loading="lazy"
+      >
+    </section>
+
+    <!-- Slide 3: Casual formal shirt -->
+    <section id="casual-formal" class="page-section" aria-label="Casual formal shirt">
+      <img 
+        src="images/page-3.png" 
+        alt="Casual Formal Shirt - Art in Motion" 
+        loading="lazy"
+      >
+    </section>
+
+    <!-- Slide 4: Smart casual -->
+    <section id="smart-casual" class="page-section" aria-label="Smart casual">
+      <img 
+        src="images/page-4.png" 
+        alt="Smart Casual Collection" 
+        loading="lazy"
+      >
+    </section>
+
+    <!-- Slide 5: contemporary urban casualwear -->
+    <section id="urban" class="page-section" aria-label="contemporary urban casualwear">
+      <img 
+        src="images/page-5.png" 
+        alt="Contemporary Urban Casualwear Denim Range" 
+        loading="lazy"
+      >
+    </section>
+
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <button class="back-to-top" id="back-to-top" aria-label="Scroll back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>

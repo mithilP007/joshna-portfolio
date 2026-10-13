@@ -1,0 +1,407 @@
+/* ==========================================================================
+   Design System & Base Tokens
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  /* Color Palette */
+  --header-bg: rgba(255, 255, 255, 0.98);
+  --header-border: rgba(0, 0, 0, 0.08);
+  --drawer-bg: #ffffff;
+  --backdrop-color: rgba(15, 23, 42, 0.55);
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --accent-color: #000000;
+  --hover-bg: #f3f4f6;
+  --active-bg: #e5e7eb;
+  
+  /* Dimensions */
+  --header-height: 64px;
+  --drawer-width: min(85vw, 360px);
+  
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   CSS Reset & Global Settings
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-family);
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+  color: var(--text-primary);
+  line-height: 1.5;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ==========================================================================
+   Fixed Sticky Header
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  background: var(--header-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--header-border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow var(--transition-fast), background-color var(--transition-fast);
+}
+
+.site-header.scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.header-container {
+  width: 100%;
+  height: 100%;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  user-select: none;
+  cursor: pointer;
+}
+
+.header-brand-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.header-brand-subtitle {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  padding-left: 0.5rem;
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   Desktop Navigation Menu
+   ========================================================================== */
+.navigation-menu.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.navigation-menu .nav-link {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 0.35rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.navigation-menu .nav-link:hover {
+  color: #000000;
+}
+
+/* Active Link Styling */
+.nav-link.active-link {
+  font-weight: bold;
+  color: #000000;
+  border-bottom: 2px solid #000000;
+}
+
+/* ==========================================================================
+   Hamburger Button (Mobile / Tablet)
+   ========================================================================== */
+.menu-toggle-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 8px;
+  padding: 0;
+  transition: background-color var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-toggle-btn:hover {
+  background-color: var(--hover-bg);
+}
+
+.hamburger-line {
+  width: 22px;
+  height: 2px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+/* On screens below 960px, switch from desktop nav to hamburger drawer */
+@media (max-width: 960px) {
+  .navigation-menu.desktop-nav {
+    display: none;
+  }
+  .menu-toggle-btn {
+    display: flex;
+  }
+}
+
+/* ==========================================================================
+   Slide-out Drawer Navigation (Mobile Overlay)
+   ========================================================================== */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: var(--backdrop-color);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-smooth), visibility var(--transition-smooth);
+  z-index: 1100;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.drawer-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--drawer-width);
+  height: 100%;
+  background-color: var(--drawer-bg);
+  box-shadow: -8px 0 35px rgba(0, 0, 0, 0.18);
+  transform: translateX(100%);
+  transition: transform var(--transition-smooth);
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.drawer-menu.active {
+  transform: translateX(0);
+}
+
+/* Drawer Header with 'X' Close Button */
+.drawer-header {
+  height: var(--header-height);
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--header-border);
+}
+
+.drawer-heading {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.drawer-close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: var(--text-primary);
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.drawer-close-btn:hover {
+  background-color: var(--hover-bg);
+  transform: scale(1.05);
+}
+
+.drawer-close-btn svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Drawer Navigation Links */
+.drawer-nav {
+  padding: 1.5rem 1rem;
+  flex: 1;
+}
+
+.drawer-nav .navigation-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.drawer-nav .nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: 12px;
+  border-left: 3px solid transparent;
+  border-bottom: none;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.drawer-nav .nav-link:hover {
+  background-color: var(--hover-bg);
+  color: #000000;
+  border-left-color: #000000;
+}
+
+.drawer-nav .nav-link.active-link {
+  background-color: #f1f5f9;
+  color: #000000;
+  border-left: 3px solid #000000;
+  border-bottom: none;
+  font-weight: bold;
+}
+
+.drawer-footer {
+  padding: 1.25rem;
+  border-top: 1px solid var(--header-border);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Responsive Sizing & Gap Fixes (Strict Requirements)
+   ========================================================================== */
+
+/* 1. Hide all sections by default, only show the active one */
+.page-section {
+  display: none;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0; 
+  padding: 0;
+  overflow: hidden; /* Clips the baked-in top Canva navigation strip */
+}
+
+.page-section.active-section {
+  display: block; /* Makes the specific slide visible */
+}
+
+/* 2. Fix the Desktop Gaps and ensure 100% width */
+.content-container {
+  width: 100%;
+  max-width: 100%; /* Overrides any previous max-width constraints */
+  margin-top: var(--header-height);
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+/* 3. Ensure images fill the screen responsively */
+.page-section img {
+  width: 100%;
+  height: auto;
+  display: block; /* Removes the tiny white gap that naturally occurs under images */
+  margin-top: -3.3%; /* Proportional shift based on width that seamlessly hides the Canva top nav strip */
+  padding: 0;
+  border: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ==========================================================================
+   Back To Top Floating Button
+   ========================================================================== */
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.82);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast), background-color var(--transition-fast);
+  z-index: 900;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background-color: #000000;
+  transform: translateY(-2px);
+}
