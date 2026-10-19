@@ -26,23 +26,30 @@ def find_pdf_file():
     return None
 
 
-def extract_with_pdftoppm(pdf_path, output_dir, dpi=150):
+def get_prefix_for_pdf(pdf_path):
+    base = os.path.basename(pdf_path).lower()
+    if "women" in base:
+        return "womens-page"
+    return "page"
+
+
+def extract_with_pdftoppm(pdf_path, output_dir, prefix="page", dpi=150):
     print(f"[*] Using pdftoppm (poppler) at {dpi} DPI...")
-    prefix = os.path.join(output_dir, "page")
+    base_prefix = os.path.join(output_dir, prefix)
     cmd = [
         "pdftoppm",
         "-png",
         "-r", str(dpi),
         pdf_path,
-        prefix
+        base_prefix
     ]
     subprocess.run(cmd, check=True)
     
-    # pdftoppm generates names like page-1.png or page-01.png
-    # Let's normalize them to page-1.png, page-2.png, etc.
-    generated_files = sorted(glob.glob(os.path.join(output_dir, "page-*.png")))
+    # pdftoppm generates names like prefix-1.png or prefix-01.png
+    # Let's normalize them to prefix-1.png, prefix-2.png, etc.
+    generated_files = sorted(glob.glob(os.path.join(output_dir, f"{prefix}-*.png")))
     for idx, filepath in enumerate(generated_files, start=1):
-        target_name = os.path.join(output_dir, f"page-{idx}.png")
+        target_name = os.path.join(output_dir, f"{prefix}-{idx}.png")
         if filepath != target_name:
             if os.path.exists(target_name):
                 os.remove(target_name)
@@ -50,7 +57,7 @@ def extract_with_pdftoppm(pdf_path, output_dir, dpi=150):
     return len(generated_files)
 
 
-def extract_with_fitz(pdf_path, output_dir, dpi=150):
+def extract_with_fitz(pdf_path, output_dir, prefix="page", dpi=150):
     import fitz  # PyMuPDF
     print(f"[*] Using PyMuPDF (fitz) at {dpi} DPI...")
     doc = fitz.open(pdf_path)
@@ -58,29 +65,29 @@ def extract_with_fitz(pdf_path, output_dir, dpi=150):
     mat = fitz.Matrix(zoom, zoom)
     for idx, page in enumerate(doc, start=1):
         pix = page.get_pixmap(matrix=mat, alpha=False)
-        out_path = os.path.join(output_dir, f"page-{idx}.png")
+        out_path = os.path.join(output_dir, f"{prefix}-{idx}.png")
         pix.save(out_path)
     return len(doc)
 
 
-def extract_with_pdf2image(pdf_path, output_dir, dpi=150):
+def extract_with_pdf2image(pdf_path, output_dir, prefix="page", dpi=150):
     from pdf2image import convert_from_path
     print(f"[*] Using pdf2image at {dpi} DPI...")
     images = convert_from_path(pdf_path, dpi=dpi)
     for idx, img in enumerate(images, start=1):
-        out_path = os.path.join(output_dir, f"page-{idx}.png")
+        out_path = os.path.join(output_dir, f"{prefix}-{idx}.png")
         img.save(out_path, "PNG")
     return len(images)
 
 
-def extract_with_pypdfium2(pdf_path, output_dir, dpi=150):
+def extract_with_pypdfium2(pdf_path, output_dir, prefix="page", dpi=150):
     import pypdfium2 as pdfium
     print(f"[*] Using pypdfium2 at {dpi} DPI...")
     pdf = pdfium.PdfDocument(pdf_path)
     scale = dpi / 72.0
     for idx, page in enumerate(pdf, start=1):
         image = page.render(scale=scale).to_pil()
-        out_path = os.path.join(output_dir, f"page-{idx}.png")
+        out_path = os.path.join(output_dir, f"{prefix}-{idx}.png")
         image.save(out_path)
     return len(pdf)
 
@@ -91,14 +98,15 @@ def main():
         print(f"[!] Error: Could not find PDF file '{pdf_path or DEFAULT_PDF}'")
         sys.exit(1)
 
-    print(f"[+] Found PDF: {pdf_path}")
+    prefix = sys.argv[2] if len(sys.argv) > 2 else get_prefix_for_pdf(pdf_path)
+    print(f"[+] Found PDF: {pdf_path} (output prefix: '{prefix}')")
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     extracted_count = 0
     # Try pdftoppm first if installed (fastest and native)
     if shutil.which("pdftoppm"):
         try:
-            extracted_count = extract_with_pdftoppm(pdf_path, OUTPUT_DIR, DPI)
+            extracted_count = extract_with_pdftoppm(pdf_path, OUTPUT_DIR, prefix, DPI)
         except Exception as e:
             print(f"[-] pdftoppm failed: {e}")
 
@@ -110,7 +118,7 @@ def main():
             ("pypdfium2", extract_with_pypdfium2),
         ]:
             try:
-                extracted_count = extractor(pdf_path, OUTPUT_DIR, DPI)
+                extracted_count = extractor(pdf_path, OUTPUT_DIR, prefix, DPI)
                 break
             except ImportError:
                 continue
@@ -124,7 +132,7 @@ def main():
 
     print(f"\n[✓] Successfully extracted {extracted_count} pages into '{OUTPUT_DIR}/':")
     for idx in range(1, extracted_count + 1):
-        img_file = os.path.join(OUTPUT_DIR, f"page-{idx}.png")
+        img_file = os.path.join(OUTPUT_DIR, f"{prefix}-{idx}.png")
         if os.path.exists(img_file):
             size_mb = os.path.getsize(img_file) / (1024 * 1024)
             print(f"    - {img_file} ({size_mb:.2f} MB)")

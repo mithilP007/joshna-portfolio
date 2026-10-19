@@ -11,10 +11,11 @@ A modern, responsive, single-page fashion design portfolio website built with HT
   - `03. Casual formal shirt`
   - `04. Smart casual`
   - `05. contemporary urban casualwear`
+  - `06. Womens`
 - **Mobile Drawer Menu**: Smooth slide-out navigation drawer with hamburger toggle and 'X' close button.
 - **Glassmorphic Sticky Header**: Fixed top navigation with subtle blur and active link indicator.
 - **High-Definition Assets**: Retina-ready artwork extracted from high-quality design boards.
-- **Python Extractor**: Automated script (`extract_pages.py`) to convert PDF design boards into high-quality images.
+- **Python Extractor**: Automated scripts (`extract_pages.py`, `extract_womens.py`) to convert PDF design boards into high-quality images.
 
 ## 📁 Project Structure
 
@@ -24,6 +25,7 @@ A modern, responsive, single-page fashion design portfolio website built with HT
 ├── styles.css         # Responsive styling, design tokens & animations
 ├── script.js          # Navigation logic, drawer toggles & slide switcher
 ├── extract_pages.py   # High-resolution PDF page extraction script
+├── extract_womens.py  # Womens collection PDF page extraction script
 ├── images/            # Extracted portfolio slide artwork
 └── README.md          # Project documentation
 ```
@@ -43,5 +45,9 @@ Open [http://localhost:8080](http://localhost:8080) in any web browser.
 If you ever update the source PDF portfolio, extract the pages using:
 
 ```bash
+# Extract main portfolio pages
 python3 extract_pages.py
+
+# Or extract Womens collection pages
+python3 extract_womens.py
 ```
