@@ -12,22 +12,24 @@ A modern, responsive, single-page fashion design portfolio website built with HT
   - `04. Smart casual`
   - `05. contemporary urban casualwear`
   - `06. Womens`
+  - `07. Stitched Visionaries`
 - **Mobile Drawer Menu**: Smooth slide-out navigation drawer with hamburger toggle and 'X' close button.
 - **Glassmorphic Sticky Header**: Fixed top navigation with subtle blur and active link indicator.
 - **High-Definition Assets**: Retina-ready artwork extracted from high-quality design boards.
-- **Python Extractor**: Automated scripts (`extract_pages.py`, `extract_womens.py`) to convert PDF design boards into high-quality images.
+- **Python Extractor**: Automated scripts (`extract_pages.py`, `extract_womens.py`, `extract_stitched_visionaries.py`) to convert PDF design boards into high-quality images.
 
 ## 📁 Project Structure
 
 ```
 .
-├── index.html         # Main single-page web structure
-├── styles.css         # Responsive styling, design tokens & animations
-├── script.js          # Navigation logic, drawer toggles & slide switcher
-├── extract_pages.py   # High-resolution PDF page extraction script
-├── extract_womens.py  # Womens collection PDF page extraction script
-├── images/            # Extracted portfolio slide artwork
-└── README.md          # Project documentation
+├── index.html                    # Main single-page web structure
+├── styles.css                    # Responsive styling, design tokens & animations
+├── script.js                     # Navigation logic, drawer toggles & slide switcher
+├── extract_pages.py              # High-resolution PDF page extraction script
+├── extract_womens.py             # Womens collection PDF page extraction script
+├── extract_stitched_visionaries.py # Stitched Visionaries PDF page extraction script
+├── images/                       # Extracted portfolio slide artwork
+└── README.md                     # Project documentation
 ```
 
 ## 🚀 Running Locally
@@ -50,4 +52,7 @@ python3 extract_pages.py
 
 # Or extract Womens collection pages
 python3 extract_womens.py
+
+# Or extract Stitched Visionaries collection pages
+python3 extract_stitched_visionaries.py
 ```

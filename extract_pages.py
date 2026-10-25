@@ -30,6 +30,8 @@ def get_prefix_for_pdf(pdf_path):
     base = os.path.basename(pdf_path).lower()
     if "women" in base:
         return "womens-page"
+    if "stitched" in base or "visionar" in base:
+        return "stitched-visionaries-page"
     return "page"
 
 
