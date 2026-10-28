@@ -17,13 +17,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const drawerBackdrop = document.querySelector('.drawer-backdrop');
   const backToTopBtn = document.querySelector('.back-to-top');
 
-  // Men Dropdown elements
+  // Dropdown navigation elements
+  const womensNavDropdown = document.getElementById('womens-nav-dropdown');
+  const womensDropdownToggle = document.getElementById('womens-dropdown-toggle');
+  const drawerWomensToggle = document.getElementById('drawer-womens-toggle');
+  const drawerWomensSubnav = document.getElementById('drawer-womens-subnav');
+
   const menNavDropdown = document.getElementById('men-nav-dropdown');
   const menDropdownToggle = document.getElementById('men-dropdown-toggle');
   const drawerMenToggle = document.getElementById('drawer-men-toggle');
   const drawerMenSubnav = document.getElementById('drawer-men-subnav');
 
+  // Subcategory mapping for parent active state indicators
+  const womensCategories = ['seasonal-fusion', 'graphic-tshirt-design', 'summer-graphic-prints'];
   const menCategories = ['graphic-tshirt', 'casual-formal', 'smart-casual', 'urban'];
+
+  // Legacy ID mapping for backwards compatibility
+  const legacyAliases = {
+    'womens': 'seasonal-fusion',
+    'tropical-rush': 'seasonal-fusion',
+    'y2k-reloaded': 'graphic-tshirt-design',
+    'weekend-carnival': 'summer-graphic-prints'
+  };
 
   // --- Drawer Open / Close Functions ---
   function openDrawer() {
@@ -54,8 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
   if (drawerBackdrop) drawerBackdrop.addEventListener('click', closeDrawer);
 
-  // --- Desktop Men Dropdown Interactions ---
-  function closeDesktopDropdown() {
+  // --- Desktop Dropdown Interactions ---
+  function closeDesktopDropdowns() {
+    if (womensNavDropdown) {
+      womensNavDropdown.classList.remove('is-open');
+    }
+    if (womensDropdownToggle) {
+      womensDropdownToggle.setAttribute('aria-expanded', 'false');
+    }
     if (menNavDropdown) {
       menNavDropdown.classList.remove('is-open');
     }
@@ -64,31 +85,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function toggleDropdown(dropdownEl, toggleBtn, otherDropdownEl, otherToggleBtn) {
+    if (!dropdownEl || !toggleBtn) return;
+    if (otherDropdownEl && otherToggleBtn) {
+      otherDropdownEl.classList.remove('is-open');
+      otherToggleBtn.setAttribute('aria-expanded', 'false');
+    }
+    const isOpen = dropdownEl.classList.toggle('is-open');
+    toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
+
+  if (womensDropdownToggle && womensNavDropdown) {
+    womensDropdownToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleDropdown(womensNavDropdown, womensDropdownToggle, menNavDropdown, menDropdownToggle);
+    });
+  }
+
   if (menDropdownToggle && menNavDropdown) {
     menDropdownToggle.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const isOpen = menNavDropdown.classList.toggle('is-open');
-      menDropdownToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      toggleDropdown(menNavDropdown, menDropdownToggle, womensNavDropdown, womensDropdownToggle);
     });
   }
 
-  // Close desktop dropdown on outside click
+  // Close desktop dropdowns on outside click
   document.addEventListener('click', (e) => {
-    if (menNavDropdown && !menNavDropdown.contains(e.target)) {
-      closeDesktopDropdown();
+    const clickedInsideWomens = womensNavDropdown && womensNavDropdown.contains(e.target);
+    const clickedInsideMen = menNavDropdown && menNavDropdown.contains(e.target);
+    if (!clickedInsideWomens && !clickedInsideMen) {
+      closeDesktopDropdowns();
     }
   });
 
-  // --- Mobile Drawer Men Accordion Interaction ---
-  if (drawerMenToggle && drawerMenSubnav) {
-    drawerMenToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      const isExpanded = drawerMenToggle.getAttribute('aria-expanded') === 'true';
-      drawerMenToggle.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
-      drawerMenSubnav.classList.toggle('collapsed', isExpanded);
-    });
+  // --- Mobile Drawer Accordion Interactions ---
+  function setupDrawerAccordion(toggleBtn, subnavEl) {
+    if (toggleBtn && subnavEl) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+        toggleBtn.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+        subnavEl.classList.toggle('collapsed', isExpanded);
+      });
+    }
   }
+
+  setupDrawerAccordion(drawerWomensToggle, drawerWomensSubnav);
+  setupDrawerAccordion(drawerMenToggle, drawerMenSubnav);
 
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -96,15 +141,16 @@ document.addEventListener('DOMContentLoaded', () => {
         closeDrawer();
         if (menuToggleBtn) menuToggleBtn.focus();
       }
-      if (menNavDropdown && menNavDropdown.classList.contains('is-open')) {
-        closeDesktopDropdown();
-        if (menDropdownToggle) menDropdownToggle.focus();
-      }
+      closeDesktopDropdowns();
     }
   });
 
   // --- Core Navigation Logic: Switch Active Slide ---
   function activateSection(targetId) {
+    if (legacyAliases[targetId]) {
+      targetId = legacyAliases[targetId];
+    }
+
     const targetSection = document.getElementById(targetId);
     if (!targetSection) return;
 
@@ -122,7 +168,16 @@ document.addEventListener('DOMContentLoaded', () => {
       nav.classList.add('active-link');
     });
 
-    // 4. Update 'Men' parent active state if viewing one of the men's categories
+    // 4. Update 'Womens' parent active state
+    if (womensCategories.includes(targetId)) {
+      if (womensDropdownToggle) womensDropdownToggle.classList.add('active-parent');
+      if (drawerWomensToggle) drawerWomensToggle.classList.add('active-parent');
+    } else {
+      if (womensDropdownToggle) womensDropdownToggle.classList.remove('active-parent');
+      if (drawerWomensToggle) drawerWomensToggle.classList.remove('active-parent');
+    }
+
+    // Update 'Men' parent active state
     if (menCategories.includes(targetId)) {
       if (menDropdownToggle) menDropdownToggle.classList.add('active-parent');
       if (drawerMenToggle) drawerMenToggle.classList.add('active-parent');
@@ -131,9 +186,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (drawerMenToggle) drawerMenToggle.classList.remove('active-parent');
     }
 
-    // 5. Close drawer & dropdown if open
+    // 5. Close drawer & dropdowns if open
     closeDrawer();
-    closeDesktopDropdown();
+    closeDesktopDropdowns();
 
     // 6. Scroll to top of the page when a new slide opens
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -162,7 +217,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Handle direct page loads or back/forward navigation with hash
   function checkUrlHash() {
-    const hash = window.location.hash.substring(1);
+    let hash = window.location.hash.substring(1);
+    if (legacyAliases[hash]) {
+      hash = legacyAliases[hash];
+    }
     if (hash && document.getElementById(hash)) {
       activateSection(hash);
     }

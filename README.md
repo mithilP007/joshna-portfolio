@@ -7,12 +7,14 @@ A modern, responsive, single-page fashion design portfolio website built with HT
 - **Responsive Design**: Spans 100% viewport width across desktop, laptop, tablet, and mobile screens with zero horizontal overflow.
 - **Multi-Slide Tab Navigation**: Toggle seamlessly between portfolio collections:
   - `01. About me`
-  - `02. Graphic Tshirt`
-  - `03. Casual formal shirt`
-  - `04. Smart casual`
-  - `05. contemporary urban casualwear`
-  - `06. Womens`
-  - `07. Stitched Visionaries`
+  - `02. Womens: Seasonal fusion`
+  - `03. Womens: Graphic tshirt design`
+  - `04. Womens: Summer graphic prints`
+  - `05. Stitched Visionaries`
+  - `06. Men: Graphic Tshirt`
+  - `07. Men: Casual formal shirt`
+  - `08. Men: Smart casual`
+  - `09. Men: contemporary urban casualwear`
 - **Mobile Drawer Menu**: Smooth slide-out navigation drawer with hamburger toggle and 'X' close button.
 - **Glassmorphic Sticky Header**: Fixed top navigation with subtle blur and active link indicator.
 - **High-Definition Assets**: Retina-ready artwork extracted from high-quality design boards.

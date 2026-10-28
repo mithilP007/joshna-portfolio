@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>Joshna Christa S B | Fashion Design Portfolio</title>
-  <meta name="description" content="Portfolio of Joshna Christa S B - M.Sc. Fashion Design and Merchandising student, showcasing Graphic T-shirts, Casual Formal Shirts, Smart Casual, and Contemporary Urban Casualwear.">
+  <meta name="description" content="Portfolio of Joshna Christa S B - M.Sc. Fashion Design and Merchandising student, showcasing Womenswear (Seasonal fusion, Graphic tshirt design, Summer graphic prints), Stitched Visionaries, and Menswear collections.">
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,10 +19,27 @@
         <span class="header-brand-subtitle">Portfolio</span>
       </a>
 
-      <!-- Desktop Navigation Menu -->
+      <!-- Desktop Navigation Menu (Order: About me -> Womens -> Stitched Visionaries -> Men) -->
       <nav class="navigation-menu desktop-nav" aria-label="Main Navigation">
         <a href="#about" class="nav-link active-link">About me</a>
-        
+
+        <!-- Womens Dropdown Navigation -->
+        <div class="nav-dropdown" id="womens-nav-dropdown">
+          <button class="nav-link dropdown-toggle" id="womens-dropdown-toggle" aria-expanded="false" aria-haspopup="true" type="button">
+            <span>Womens</span>
+            <svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="dropdown-menu" id="womens-dropdown-menu" role="menu" aria-label="Womens Subcategories">
+            <a href="#seasonal-fusion" class="nav-link dropdown-item" role="menuitem">Seasonal fusion</a>
+            <a href="#graphic-tshirt-design" class="nav-link dropdown-item" role="menuitem">Graphic tshirt design</a>
+            <a href="#summer-graphic-prints" class="nav-link dropdown-item" role="menuitem">Summer graphic prints</a>
+          </div>
+        </div>
+
+        <a href="#stitched-visionaries" class="nav-link">Stitched Visionaries</a>
+
         <!-- Men Dropdown Navigation -->
         <div class="nav-dropdown" id="men-nav-dropdown">
           <button class="nav-link dropdown-toggle" id="men-dropdown-toggle" aria-expanded="false" aria-haspopup="true" type="button">
@@ -38,9 +55,6 @@
             <a href="#urban" class="nav-link dropdown-item" role="menuitem">contemporary urban casualwear</a>
           </div>
         </div>
-
-        <a href="#womens" class="nav-link">Womens</a>
-        <a href="#stitched-visionaries" class="nav-link">Stitched Visionaries</a>
       </nav>
 
       <!-- Clean Hamburger Menu Icon for Mobile / Tablet -->
@@ -66,10 +80,27 @@
       </button>
     </div>
 
-    <!-- Mobile Drawer Navigation Links -->
+    <!-- Mobile Drawer Navigation Links (Order: About me -> Womens -> Stitched Visionaries -> Men) -->
     <div class="drawer-nav">
       <nav class="navigation-menu drawer-navigation" aria-label="Mobile Navigation">
         <a href="#about" class="nav-link active-link">About me</a>
+
+        <!-- Womens Drawer Collapsible Section -->
+        <div class="drawer-dropdown" id="drawer-womens-dropdown">
+          <button class="drawer-dropdown-btn" id="drawer-womens-toggle" aria-expanded="true" aria-controls="drawer-womens-subnav" type="button">
+            <span class="drawer-dropdown-title">Womens</span>
+            <svg class="drawer-dropdown-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="drawer-subnav" id="drawer-womens-subnav">
+            <a href="#seasonal-fusion" class="nav-link drawer-sublink">Seasonal fusion</a>
+            <a href="#graphic-tshirt-design" class="nav-link drawer-sublink">Graphic tshirt design</a>
+            <a href="#summer-graphic-prints" class="nav-link drawer-sublink">Summer graphic prints</a>
+          </div>
+        </div>
+
+        <a href="#stitched-visionaries" class="nav-link">Stitched Visionaries</a>
 
         <!-- Men Drawer Collapsible Section -->
         <div class="drawer-dropdown" id="drawer-men-dropdown">
@@ -86,9 +117,6 @@
             <a href="#urban" class="nav-link drawer-sublink">contemporary urban casualwear</a>
           </div>
         </div>
-
-        <a href="#womens" class="nav-link">Womens</a>
-        <a href="#stitched-visionaries" class="nav-link">Stitched Visionaries</a>
       </nav>
     </div>
 
@@ -100,7 +128,7 @@
   <!-- Main Content Container: 100% Viewport Width -->
   <main class="content-container">
 
-    <!-- Slide 1: About me -->
+    <!-- 01. About me -->
     <section id="about" class="page-section active-section" aria-label="About me">
       <img 
         src="images/page-1.png" 
@@ -110,107 +138,65 @@
       >
     </section>
 
-    <!-- Slide 2: Graphic Tshirt -->
-    <section id="graphic-tshirt" class="page-section" aria-label="Graphic Tshirt">
+    <!-- 02. Womens: Seasonal fusion -->
+    <section id="seasonal-fusion" class="page-section" aria-label="Seasonal fusion">
       <!-- In-Page Sub-Navigation Row -->
-      <nav class="subnav-container" aria-label="Graphic Tshirt sub-navigation">
+      <nav class="subnav-container" aria-label="Seasonal fusion sub-navigation">
         <div class="subnav-inner">
-          <span class="subnav-label">Explore Men's:</span>
+          <span class="subnav-label">Explore Women's:</span>
           <div class="subnav-pills">
-            <a href="#casual-formal" class="nav-link subnav-pill">Casual formal shirt</a>
-            <a href="#smart-casual" class="nav-link subnav-pill">Smart casual</a>
-            <a href="#urban" class="nav-link subnav-pill">contemporary urban casualwear</a>
+            <a href="#graphic-tshirt-design" class="nav-link subnav-pill">Graphic tshirt design</a>
+            <a href="#summer-graphic-prints" class="nav-link subnav-pill">Summer graphic prints</a>
           </div>
         </div>
       </nav>
-      <img 
-        src="images/page-2.png" 
-        alt="Graphic Tshirt Collection" 
-        loading="lazy"
-      >
-    </section>
-
-    <!-- Slide 3: Casual formal shirt -->
-    <section id="casual-formal" class="page-section" aria-label="Casual formal shirt">
-      <!-- In-Page Sub-Navigation Row -->
-      <nav class="subnav-container" aria-label="Casual formal shirt sub-navigation">
-        <div class="subnav-inner">
-          <span class="subnav-label">Explore Men's:</span>
-          <div class="subnav-pills">
-            <a href="#graphic-tshirt" class="nav-link subnav-pill">Graphic Tshirt</a>
-            <a href="#smart-casual" class="nav-link subnav-pill">Smart casual</a>
-            <a href="#urban" class="nav-link subnav-pill">contemporary urban casualwear</a>
-          </div>
-        </div>
-      </nav>
-      <img 
-        src="images/page-3.png" 
-        alt="Casual Formal Shirt - Art in Motion" 
-        loading="lazy"
-      >
-    </section>
-
-    <!-- Slide 4: Smart casual -->
-    <section id="smart-casual" class="page-section" aria-label="Smart casual">
-      <!-- In-Page Sub-Navigation Row -->
-      <nav class="subnav-container" aria-label="Smart casual sub-navigation">
-        <div class="subnav-inner">
-          <span class="subnav-label">Explore Men's:</span>
-          <div class="subnav-pills">
-            <a href="#graphic-tshirt" class="nav-link subnav-pill">Graphic Tshirt</a>
-            <a href="#casual-formal" class="nav-link subnav-pill">Casual formal shirt</a>
-            <a href="#urban" class="nav-link subnav-pill">contemporary urban casualwear</a>
-          </div>
-        </div>
-      </nav>
-      <img 
-        src="images/page-4.png" 
-        alt="Smart Casual Collection" 
-        loading="lazy"
-      >
-    </section>
-
-    <!-- Slide 5: contemporary urban casualwear -->
-    <section id="urban" class="page-section" aria-label="contemporary urban casualwear">
-      <!-- In-Page Sub-Navigation Row -->
-      <nav class="subnav-container" aria-label="contemporary urban casualwear sub-navigation">
-        <div class="subnav-inner">
-          <span class="subnav-label">Explore Men's:</span>
-          <div class="subnav-pills">
-            <a href="#graphic-tshirt" class="nav-link subnav-pill">Graphic Tshirt</a>
-            <a href="#casual-formal" class="nav-link subnav-pill">Casual formal shirt</a>
-            <a href="#smart-casual" class="nav-link subnav-pill">Smart casual</a>
-          </div>
-        </div>
-      </nav>
-      <img 
-        src="images/page-5.png" 
-        alt="Contemporary Urban Casualwear Denim Range" 
-        loading="lazy"
-      >
-    </section>
-
-    <!-- Slide 6: Womens Collection -->
-    <section id="womens" class="page-section" aria-label="Womens">
       <img 
         src="images/womens-page-1.png" 
-        alt="Womens Collection - Winter Collab" 
-        loading="lazy"
-      >
-      <img 
-        src="images/womens-page-2.png" 
-        alt="Womens Collection - Y2K Graphic Tshirt" 
-        loading="lazy"
-      >
-      <img 
-        src="images/womens-page-3.png" 
-        alt="Womens Collection - Summer Collection" 
+        alt="Seasonal fusion Collection - Winter Collab" 
         loading="lazy"
       >
     </section>
 
-    <!-- Slide 7: Stitched Visionaries -->
-    <section id="stitched-visionaries" class="page-section">
+    <!-- 03. Womens: Graphic tshirt design -->
+    <section id="graphic-tshirt-design" class="page-section" aria-label="Graphic tshirt design">
+      <!-- In-Page Sub-Navigation Row -->
+      <nav class="subnav-container" aria-label="Graphic tshirt design sub-navigation">
+        <div class="subnav-inner">
+          <span class="subnav-label">Explore Women's:</span>
+          <div class="subnav-pills">
+            <a href="#seasonal-fusion" class="nav-link subnav-pill">Seasonal fusion</a>
+            <a href="#summer-graphic-prints" class="nav-link subnav-pill">Summer graphic prints</a>
+          </div>
+        </div>
+      </nav>
+      <img 
+        src="images/womens-page-2.png" 
+        alt="Graphic tshirt design Collection" 
+        loading="lazy"
+      >
+    </section>
+
+    <!-- 04. Womens: Summer graphic prints -->
+    <section id="summer-graphic-prints" class="page-section" aria-label="Summer graphic prints">
+      <!-- In-Page Sub-Navigation Row -->
+      <nav class="subnav-container" aria-label="Summer graphic prints sub-navigation">
+        <div class="subnav-inner">
+          <span class="subnav-label">Explore Women's:</span>
+          <div class="subnav-pills">
+            <a href="#seasonal-fusion" class="nav-link subnav-pill">Seasonal fusion</a>
+            <a href="#graphic-tshirt-design" class="nav-link subnav-pill">Graphic tshirt design</a>
+          </div>
+        </div>
+      </nav>
+      <img 
+        src="images/womens-page-3.png" 
+        alt="Summer graphic prints Collection" 
+        loading="lazy"
+      >
+    </section>
+
+    <!-- 05. Stitched Visionaries -->
+    <section id="stitched-visionaries" class="page-section" aria-label="Stitched Visionaries">
       <img 
         src="images/stitched-visionaries-page-1.png" 
         alt="Stitched Visionaries - Page 1" 
@@ -334,6 +320,86 @@
       <img 
         src="images/stitched-visionaries-page-25.png" 
         alt="Stitched Visionaries - Page 25" 
+        loading="lazy"
+      >
+    </section>
+
+    <!-- 06. Men: Graphic Tshirt -->
+    <section id="graphic-tshirt" class="page-section" aria-label="Graphic Tshirt">
+      <!-- In-Page Sub-Navigation Row -->
+      <nav class="subnav-container" aria-label="Graphic Tshirt sub-navigation">
+        <div class="subnav-inner">
+          <span class="subnav-label">Explore Men's:</span>
+          <div class="subnav-pills">
+            <a href="#casual-formal" class="nav-link subnav-pill">Casual formal shirt</a>
+            <a href="#smart-casual" class="nav-link subnav-pill">Smart casual</a>
+            <a href="#urban" class="nav-link subnav-pill">contemporary urban casualwear</a>
+          </div>
+        </div>
+      </nav>
+      <img 
+        src="images/page-2.png" 
+        alt="Graphic Tshirt Collection" 
+        loading="lazy"
+      >
+    </section>
+
+    <!-- 07. Men: Casual formal shirt -->
+    <section id="casual-formal" class="page-section" aria-label="Casual formal shirt">
+      <!-- In-Page Sub-Navigation Row -->
+      <nav class="subnav-container" aria-label="Casual formal shirt sub-navigation">
+        <div class="subnav-inner">
+          <span class="subnav-label">Explore Men's:</span>
+          <div class="subnav-pills">
+            <a href="#graphic-tshirt" class="nav-link subnav-pill">Graphic Tshirt</a>
+            <a href="#smart-casual" class="nav-link subnav-pill">Smart casual</a>
+            <a href="#urban" class="nav-link subnav-pill">contemporary urban casualwear</a>
+          </div>
+        </div>
+      </nav>
+      <img 
+        src="images/page-3.png" 
+        alt="Casual Formal Shirt - Art in Motion" 
+        loading="lazy"
+      >
+    </section>
+
+    <!-- 08. Men: Smart casual -->
+    <section id="smart-casual" class="page-section" aria-label="Smart casual">
+      <!-- In-Page Sub-Navigation Row -->
+      <nav class="subnav-container" aria-label="Smart casual sub-navigation">
+        <div class="subnav-inner">
+          <span class="subnav-label">Explore Men's:</span>
+          <div class="subnav-pills">
+            <a href="#graphic-tshirt" class="nav-link subnav-pill">Graphic Tshirt</a>
+            <a href="#casual-formal" class="nav-link subnav-pill">Casual formal shirt</a>
+            <a href="#urban" class="nav-link subnav-pill">contemporary urban casualwear</a>
+          </div>
+        </div>
+      </nav>
+      <img 
+        src="images/page-4.png" 
+        alt="Smart Casual Collection" 
+        loading="lazy"
+      >
+    </section>
+
+    <!-- 09. Men: contemporary urban casualwear -->
+    <section id="urban" class="page-section" aria-label="contemporary urban casualwear">
+      <!-- In-Page Sub-Navigation Row -->
+      <nav class="subnav-container" aria-label="contemporary urban casualwear sub-navigation">
+        <div class="subnav-inner">
+          <span class="subnav-label">Explore Men's:</span>
+          <div class="subnav-pills">
+            <a href="#graphic-tshirt" class="nav-link subnav-pill">Graphic Tshirt</a>
+            <a href="#casual-formal" class="nav-link subnav-pill">Casual formal shirt</a>
+            <a href="#smart-casual" class="nav-link subnav-pill">Smart casual</a>
+          </div>
+        </div>
+      </nav>
+      <img 
+        src="images/page-5.png" 
+        alt="Contemporary Urban Casualwear Denim Range" 
         loading="lazy"
       >
     </section>
