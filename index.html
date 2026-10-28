@@ -22,10 +22,23 @@
       <!-- Desktop Navigation Menu -->
       <nav class="navigation-menu desktop-nav" aria-label="Main Navigation">
         <a href="#about" class="nav-link active-link">About me</a>
-        <a href="#graphic-tshirt" class="nav-link">Graphic Tshirt</a>
-        <a href="#casual-formal" class="nav-link">Casual formal shirt</a>
-        <a href="#smart-casual" class="nav-link">Smart casual</a>
-        <a href="#urban" class="nav-link">contemporary urban casualwear</a>
+        
+        <!-- Men Dropdown Navigation -->
+        <div class="nav-dropdown" id="men-nav-dropdown">
+          <button class="nav-link dropdown-toggle" id="men-dropdown-toggle" aria-expanded="false" aria-haspopup="true" type="button">
+            <span>Men</span>
+            <svg class="dropdown-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="dropdown-menu" id="men-dropdown-menu" role="menu" aria-label="Men's Subcategories">
+            <a href="#graphic-tshirt" class="nav-link dropdown-item" role="menuitem">Graphic Tshirt</a>
+            <a href="#casual-formal" class="nav-link dropdown-item" role="menuitem">Casual formal shirt</a>
+            <a href="#smart-casual" class="nav-link dropdown-item" role="menuitem">Smart casual</a>
+            <a href="#urban" class="nav-link dropdown-item" role="menuitem">contemporary urban casualwear</a>
+          </div>
+        </div>
+
         <a href="#womens" class="nav-link">Womens</a>
         <a href="#stitched-visionaries" class="nav-link">Stitched Visionaries</a>
       </nav>
@@ -57,10 +70,23 @@
     <div class="drawer-nav">
       <nav class="navigation-menu drawer-navigation" aria-label="Mobile Navigation">
         <a href="#about" class="nav-link active-link">About me</a>
-        <a href="#graphic-tshirt" class="nav-link">Graphic Tshirt</a>
-        <a href="#casual-formal" class="nav-link">Casual formal shirt</a>
-        <a href="#smart-casual" class="nav-link">Smart casual</a>
-        <a href="#urban" class="nav-link">contemporary urban casualwear</a>
+
+        <!-- Men Drawer Collapsible Section -->
+        <div class="drawer-dropdown" id="drawer-men-dropdown">
+          <button class="drawer-dropdown-btn" id="drawer-men-toggle" aria-expanded="true" aria-controls="drawer-men-subnav" type="button">
+            <span class="drawer-dropdown-title">Men</span>
+            <svg class="drawer-dropdown-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="drawer-subnav" id="drawer-men-subnav">
+            <a href="#graphic-tshirt" class="nav-link drawer-sublink">Graphic Tshirt</a>
+            <a href="#casual-formal" class="nav-link drawer-sublink">Casual formal shirt</a>
+            <a href="#smart-casual" class="nav-link drawer-sublink">Smart casual</a>
+            <a href="#urban" class="nav-link drawer-sublink">contemporary urban casualwear</a>
+          </div>
+        </div>
+
         <a href="#womens" class="nav-link">Womens</a>
         <a href="#stitched-visionaries" class="nav-link">Stitched Visionaries</a>
       </nav>
@@ -86,6 +112,17 @@
 
     <!-- Slide 2: Graphic Tshirt -->
     <section id="graphic-tshirt" class="page-section" aria-label="Graphic Tshirt">
+      <!-- In-Page Sub-Navigation Row -->
+      <nav class="subnav-container" aria-label="Graphic Tshirt sub-navigation">
+        <div class="subnav-inner">
+          <span class="subnav-label">Explore Men's:</span>
+          <div class="subnav-pills">
+            <a href="#casual-formal" class="nav-link subnav-pill">Casual formal shirt</a>
+            <a href="#smart-casual" class="nav-link subnav-pill">Smart casual</a>
+            <a href="#urban" class="nav-link subnav-pill">contemporary urban casualwear</a>
+          </div>
+        </div>
+      </nav>
       <img 
         src="images/page-2.png" 
         alt="Graphic Tshirt Collection" 
@@ -95,6 +132,17 @@
 
     <!-- Slide 3: Casual formal shirt -->
     <section id="casual-formal" class="page-section" aria-label="Casual formal shirt">
+      <!-- In-Page Sub-Navigation Row -->
+      <nav class="subnav-container" aria-label="Casual formal shirt sub-navigation">
+        <div class="subnav-inner">
+          <span class="subnav-label">Explore Men's:</span>
+          <div class="subnav-pills">
+            <a href="#graphic-tshirt" class="nav-link subnav-pill">Graphic Tshirt</a>
+            <a href="#smart-casual" class="nav-link subnav-pill">Smart casual</a>
+            <a href="#urban" class="nav-link subnav-pill">contemporary urban casualwear</a>
+          </div>
+        </div>
+      </nav>
       <img 
         src="images/page-3.png" 
         alt="Casual Formal Shirt - Art in Motion" 
@@ -104,6 +152,17 @@
 
     <!-- Slide 4: Smart casual -->
     <section id="smart-casual" class="page-section" aria-label="Smart casual">
+      <!-- In-Page Sub-Navigation Row -->
+      <nav class="subnav-container" aria-label="Smart casual sub-navigation">
+        <div class="subnav-inner">
+          <span class="subnav-label">Explore Men's:</span>
+          <div class="subnav-pills">
+            <a href="#graphic-tshirt" class="nav-link subnav-pill">Graphic Tshirt</a>
+            <a href="#casual-formal" class="nav-link subnav-pill">Casual formal shirt</a>
+            <a href="#urban" class="nav-link subnav-pill">contemporary urban casualwear</a>
+          </div>
+        </div>
+      </nav>
       <img 
         src="images/page-4.png" 
         alt="Smart Casual Collection" 
@@ -113,6 +172,17 @@
 
     <!-- Slide 5: contemporary urban casualwear -->
     <section id="urban" class="page-section" aria-label="contemporary urban casualwear">
+      <!-- In-Page Sub-Navigation Row -->
+      <nav class="subnav-container" aria-label="contemporary urban casualwear sub-navigation">
+        <div class="subnav-inner">
+          <span class="subnav-label">Explore Men's:</span>
+          <div class="subnav-pills">
+            <a href="#graphic-tshirt" class="nav-link subnav-pill">Graphic Tshirt</a>
+            <a href="#casual-formal" class="nav-link subnav-pill">Casual formal shirt</a>
+            <a href="#smart-casual" class="nav-link subnav-pill">Smart casual</a>
+          </div>
+        </div>
+      </nav>
       <img 
         src="images/page-5.png" 
         alt="Contemporary Urban Casualwear Denim Range" 

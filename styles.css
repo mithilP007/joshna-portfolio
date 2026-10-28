@@ -145,6 +145,128 @@ body {
 }
 
 /* ==========================================================================
+   Men Dropdown Menu (Desktop)
+   ========================================================================== */
+.nav-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+}
+
+.dropdown-toggle {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  padding: 0.35rem 0;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.dropdown-toggle:hover {
+  color: #000000;
+}
+
+.dropdown-toggle.active-link,
+.dropdown-toggle.active-parent {
+  font-weight: bold;
+  color: #000000;
+  border-bottom: 2px solid #000000;
+}
+
+.dropdown-chevron {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  transition: transform var(--transition-fast);
+}
+
+.nav-dropdown:hover .dropdown-chevron,
+.nav-dropdown:focus-within .dropdown-chevron,
+.nav-dropdown.is-open .dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+  padding: 0.45rem;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s;
+  z-index: 1050;
+}
+
+/* Invisible hover bridge to prevent menu closing when moving cursor */
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu,
+.nav-dropdown.is-open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-item {
+  display: flex !important;
+  align-items: center;
+  padding: 0.65rem 0.95rem !important;
+  font-size: 0.84rem !important;
+  font-weight: 500 !important;
+  color: var(--text-primary) !important;
+  text-decoration: none;
+  border-radius: 8px;
+  border-bottom: none !important;
+  white-space: nowrap;
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.dropdown-item:hover {
+  background-color: var(--hover-bg) !important;
+  color: #000000 !important;
+  transform: translateX(3px);
+}
+
+.dropdown-item.active-link {
+  background-color: #111827 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  border-bottom: none !important;
+  transform: none;
+}
+
+/* ==========================================================================
    Hamburger Button (Mobile / Tablet)
    ========================================================================== */
 .menu-toggle-btn {
@@ -319,6 +441,98 @@ body {
   font-weight: bold;
 }
 
+/* ==========================================================================
+   Drawer Dropdown Menu (Mobile)
+   ========================================================================== */
+.drawer-dropdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-dropdown-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.drawer-dropdown-btn:hover {
+  background-color: var(--hover-bg);
+  color: #000000;
+  border-left-color: #000000;
+}
+
+.drawer-dropdown-btn.active-parent {
+  background-color: #f1f5f9;
+  color: #000000;
+  border-left-color: #000000;
+  font-weight: bold;
+}
+
+.drawer-dropdown-chevron {
+  transition: transform var(--transition-fast);
+}
+
+.drawer-dropdown-btn[aria-expanded="true"] .drawer-dropdown-chevron,
+.drawer-dropdown.open .drawer-dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.drawer-subnav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-left: 1rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+  border-left: 2px solid #e5e7eb;
+  margin-left: 1.5rem;
+  transition: max-height var(--transition-smooth), opacity var(--transition-smooth);
+}
+
+.drawer-subnav.collapsed {
+  display: none;
+}
+
+.drawer-sublink {
+  font-size: 0.92rem !important;
+  font-weight: 500 !important;
+  padding: 0.65rem 0.95rem !important;
+  border-radius: 8px !important;
+  border-left: none !important;
+  border-bottom: none !important;
+  color: var(--text-secondary) !important;
+  text-decoration: none;
+  display: flex !important;
+  align-items: center;
+  transition: all var(--transition-fast) !important;
+}
+
+.drawer-sublink:hover {
+  background-color: var(--hover-bg) !important;
+  color: #000000 !important;
+}
+
+.drawer-sublink.active-link {
+  background-color: #111827 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
 .drawer-footer {
   padding: 1.25rem;
   border-top: 1px solid var(--header-border);
@@ -367,6 +581,108 @@ body {
   border: 0;
   user-select: none;
   -webkit-user-drag: none;
+}
+
+/* ==========================================================================
+   In-Page Sub-Navigation (Men's Categories Pills)
+   ========================================================================== */
+.subnav-container {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0.85rem 1.25rem;
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.subnav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.subnav-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.subnav-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.subnav-pill {
+  display: inline-flex !important;
+  align-items: center;
+  padding: 0.45rem 1.05rem !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--text-secondary) !important;
+  background-color: #f8fafc;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  border-radius: 9999px !important;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.subnav-pill:hover {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.subnav-pill:active {
+  transform: translateY(0);
+}
+
+.subnav-pill.active-link {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: #000000 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .subnav-container {
+    padding: 0.6rem 0.75rem;
+  }
+  
+  .subnav-inner {
+    gap: 0.4rem;
+  }
+  
+  .subnav-label {
+    font-size: 0.7rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: -0.1rem;
+  }
+  
+  .subnav-pill {
+    padding: 0.38rem 0.75rem !important;
+    font-size: 0.74rem !important;
+  }
 }
 
 /* ==========================================================================
