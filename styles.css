@@ -584,6 +584,208 @@ body {
 }
 
 /* ==========================================================================
+   Hero Dashboard Animated Character ('About me' section)
+   ========================================================================== */
+.hero-dashboard-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-video-box {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #0c1012;
+}
+
+.hero-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: #0c1012;
+}
+
+/* Seamlessly cover Gemini watermark symbol in bottom right */
+.gemini-watermark-cover {
+  position: absolute;
+  left: 86.8%;
+  top: 76.5%;
+  width: 7.2%;
+  height: 13.0%;
+  min-width: 28px;
+  min-height: 28px;
+  background: linear-gradient(180deg, #2c3838 0%, #242c2e 55%, #202727 100%);
+  border-radius: 50%;
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Elegant Luxury Audio Activation Pill (auto-fades when sound plays) */
+.hero-sound-hint {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  padding: 9px 22px;
+  border-radius: 9999px;
+  font-family: var(--font-family);
+  font-size: 0.84rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero-sound-hint.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  animation: pulse-audio-hint 2.4s infinite ease-in-out;
+}
+
+@keyframes pulse-audio-hint {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-3px);
+    box-shadow: 0 12px 36px rgba(99, 102, 241, 0.5);
+    border-color: rgba(165, 180, 252, 0.75);
+  }
+}
+
+.hero-sound-hint svg {
+  display: block;
+  flex-shrink: 0;
+  color: #a5b4fc;
+}
+
+/* Floating Sound ON/OFF Toggle Button */
+.hero-sound-btn {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-family: var(--font-family);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.hero-sound-btn:hover {
+  background: rgba(0, 0, 0, 0.95);
+  border-color: rgba(255, 255, 255, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.55);
+}
+
+.hero-sound-btn:active {
+  transform: translateY(0);
+}
+
+.hero-sound-btn .sound-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
+  display: inline-block;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.hero-sound-btn.is-muted {
+  background: rgba(30, 41, 59, 0.9);
+  color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.28);
+  animation: pulse-sound-hint 2.6s infinite ease-in-out;
+}
+
+@keyframes pulse-sound-hint {
+  0%, 100% {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+  50% {
+    box-shadow: 0 4px 22px rgba(99, 102, 241, 0.55);
+    border-color: rgba(165, 180, 252, 0.7);
+  }
+}
+
+.hero-sound-btn.is-muted .sound-indicator-dot {
+  background-color: #94a3b8;
+  box-shadow: none;
+}
+
+.hero-sound-btn svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .hero-sound-btn {
+    bottom: 14px;
+    left: 14px;
+    padding: 6px 14px;
+    font-size: 0.76rem;
+    gap: 6px;
+  }
+}
+
+.hero-body-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 0 !important;
+  padding: 0;
+  border: 0;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ==========================================================================
    In-Page Sub-Navigation (Category Pills - Men & Womens)
    ========================================================================== */
 .subnav-container {
