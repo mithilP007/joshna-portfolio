@@ -6,7 +6,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // Grab all navigation links and all page sections
-  const navLinks = document.querySelectorAll('.nav-link');
+  const navLinks = document.querySelectorAll('.nav-link, .header-brand');
   const sections = document.querySelectorAll('.page-section');
   
   // Header, Drawer, Dropdowns, and Utility Elements
@@ -53,6 +53,12 @@ document.addEventListener('DOMContentLoaded', () => {
     'y2k-reloaded': 'graphic-tshirt-design',
     'weekend-carnival': 'summer-graphic-prints'
   };
+
+  // Helper: check if About/Dashboard section is currently active
+  function isAboutActive() {
+    const aboutSec = document.getElementById('about');
+    return Boolean(aboutSec && aboutSec.classList.contains('active-section'));
+  }
 
   // --- Drawer Open / Close Functions ---
   function openDrawer() {
@@ -177,7 +183,11 @@ document.addEventListener('DOMContentLoaded', () => {
     targetSection.classList.add('active-section');
 
     // 3. Update active state across all navigation menus (desktop, dropdown, pills, mobile drawer)
-    navLinks.forEach(nav => nav.classList.remove('active-link'));
+    navLinks.forEach(nav => {
+      if (nav.classList.contains('nav-link')) {
+        nav.classList.remove('active-link');
+      }
+    });
     document.querySelectorAll(`.nav-link[href="#${targetId}"]`).forEach(nav => {
       nav.classList.add('active-link');
     });
@@ -207,13 +217,10 @@ document.addEventListener('DOMContentLoaded', () => {
         playSoundNow();
       }
     } else {
-      if (heroVideo && !heroVideo.paused) heroVideo.pause();
-      if (audioCtx && audioCtx.state === 'running') {
-        audioCtx.suspend().catch(() => {});
+      if (heroVideo && !heroVideo.paused) {
+        heroVideo.pause();
       }
-      if (heroAudio && !heroAudio.paused) {
-        heroAudio.pause();
-      }
+      pauseSound();
     }
 
     // 5. Close drawer & dropdowns if open
@@ -224,8 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     // 7. Update URL hash without causing a page jump
-    if (history.pushState) {
-      history.pushState(null, '', `#${targetId}`);
+    if (window.history && window.history.pushState) {
+      window.history.pushState(null, '', `#${targetId}`);
     } else {
       window.location.hash = targetId;
     }
@@ -248,6 +255,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle direct page loads or back/forward navigation with hash
   function checkUrlHash() {
     let hash = window.location.hash.substring(1);
+    if (!hash) {
+      hash = 'about';
+    }
     if (legacyAliases[hash]) {
       hash = legacyAliases[hash];
     }
@@ -256,6 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   window.addEventListener('hashchange', checkUrlHash);
+  window.addEventListener('popstate', checkUrlHash);
   if (window.location.hash) {
     checkUrlHash();
   }
@@ -293,6 +304,21 @@ document.addEventListener('DOMContentLoaded', () => {
     return audioCtx;
   }
 
+  // Helper to pause all audio and sound processing
+  function pauseSound() {
+    stopAudioBufferNode();
+    if (heroAudio) {
+      heroAudio.pause();
+      heroAudio.muted = true;
+    }
+    if (audioCtx && audioCtx.state === 'running') {
+      try {
+        audioCtx.suspend().catch(() => {});
+      } catch (e) {}
+    }
+    hideSoundHint();
+  }
+
   async function loadAudioBuffer() {
     if (audioBuffer) return audioBuffer;
     if (isDecodingBuffer) return null;
@@ -309,8 +335,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const arrayBuf = await resp.arrayBuffer();
       if (audioCtx) {
         audioBuffer = await audioCtx.decodeAudioData(arrayBuf);
-        // If sound is enabled and running, seamlessly transition to Web Audio
-        if (isSoundEnabled && audioCtx.state === 'running') {
+        // If sound is enabled, audioCtx running, AND we are on the About/Dashboard section, transition to Web Audio
+        if (isAboutActive() && isSoundEnabled && audioCtx.state === 'running') {
           playAudioBufferNode(heroVideo ? heroVideo.currentTime : 0);
           if (heroAudio) {
             heroAudio.pause();
@@ -328,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function playAudioBufferNode(startOffset = 0) {
-    if (!audioCtx || !audioBuffer || !isSoundEnabled) return;
+    if (!isAboutActive() || !audioCtx || !audioBuffer || !isSoundEnabled) return;
 
     if (currentSource) {
       try {
@@ -388,7 +414,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function playSoundNow() {
-    if (!isSoundEnabled) return;
+    // Crucial: Only play sound if currently viewing the About/Dashboard section
+    if (!isAboutActive() || !isSoundEnabled) return;
     updateSoundUI(true);
 
     const ctx = getAudioContext();
@@ -424,16 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function stopSound() {
     isSoundEnabled = false;
     updateSoundUI(false);
-    stopAudioBufferNode();
-    if (heroAudio) {
-      heroAudio.pause();
-      heroAudio.muted = true;
-    }
-    if (audioCtx && audioCtx.state === 'running') {
-      try {
-        audioCtx.suspend();
-      } catch (e) {}
-    }
+    pauseSound();
   }
 
   function toggleSound() {
@@ -449,6 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let soundHintTimer = null;
 
   function showSoundHint() {
+    if (!isAboutActive()) return;
     if (soundHint && isSoundEnabled && (!audioCtx || audioCtx.state !== 'running') && (!heroAudio || heroAudio.paused)) {
       soundHint.classList.add('is-visible');
     }
@@ -473,8 +492,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Pre-load audio buffer immediately on page load
   loadAudioBuffer();
 
-  // Attempt immediate sound playback on load
-  if (isSoundEnabled) {
+  // Attempt immediate sound playback on load ONLY if about section is active
+  if (isAboutActive() && isSoundEnabled) {
     playSoundNow();
     soundHintTimer = setTimeout(showSoundHint, 700);
   }
@@ -482,9 +501,21 @@ document.addEventListener('DOMContentLoaded', () => {
   // Synchronous User Gesture Auto-Activation
   const gestureEvents = ['click', 'pointerdown', 'mousedown', 'touchstart', 'touchend', 'keydown', 'wheel', 'scroll'];
   function onUserGesture(e) {
-    if (e && e.target && e.target.closest && e.target.closest('#hero-sound-toggle-btn')) {
-      return; // Handled exclusively by the toggle button handler
+    // If not currently on the about section (dashboard), never start or resume sound
+    if (!isAboutActive()) return;
+
+    if (e && e.target && e.target.closest) {
+      if (e.target.closest('#hero-sound-toggle-btn')) {
+        return; // Handled exclusively by the toggle button handler
+      }
+      // If clicking a link leading away from the about section, do not trigger sound
+      const navLink = e.target.closest('a[href^="#"]');
+      if (navLink) {
+        const href = navLink.getAttribute('href');
+        if (href && href !== '#about') return;
+      }
     }
+
     const ctx = getAudioContext();
     if (ctx && ctx.state === 'suspended') {
       ctx.resume().catch(() => {});
@@ -503,17 +534,29 @@ document.addEventListener('DOMContentLoaded', () => {
   // Ensure Video Playback & Loop Synchronization
   if (heroVideo) {
     function ensureVideoPlayback() {
+      if (!isAboutActive()) return;
       heroVideo.muted = true; // Video element remains muted so browser never blocks or stalls video
       if (heroVideo.paused) {
         heroVideo.play().catch(() => {});
       }
     }
 
-    ensureVideoPlayback();
-    heroVideo.addEventListener('loadedmetadata', ensureVideoPlayback);
-    heroVideo.addEventListener('canplay', ensureVideoPlayback);
+    if (isAboutActive()) {
+      ensureVideoPlayback();
+    }
+    heroVideo.addEventListener('loadedmetadata', () => {
+      if (isAboutActive()) ensureVideoPlayback();
+    });
+    heroVideo.addEventListener('canplay', () => {
+      if (isAboutActive()) ensureVideoPlayback();
+    });
 
     heroVideo.addEventListener('ended', () => {
+      if (!isAboutActive()) {
+        heroVideo.pause();
+        pauseSound();
+        return;
+      }
       heroVideo.currentTime = 0;
       ensureVideoPlayback();
       if (isSoundEnabled) {
@@ -527,6 +570,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     heroVideo.addEventListener('timeupdate', () => {
+      if (!isAboutActive()) {
+        if (!heroVideo.paused) heroVideo.pause();
+        pauseSound();
+        return;
+      }
       if (isSoundEnabled) {
         if (isWebAudioActive && currentSource) {
           if (heroVideo.currentTime < lastSyncVideoTime - 0.5) {
@@ -554,6 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (heroVideoBox) {
     heroVideoBox.addEventListener('click', (e) => {
       if (e.target.closest('#hero-sound-toggle-btn')) return;
+      if (!isAboutActive()) return;
       if (heroVideo && heroVideo.paused) {
         heroVideo.play().catch(() => {});
       }
@@ -567,15 +616,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       if (heroVideo && !heroVideo.paused) heroVideo.pause();
-      if (audioCtx && audioCtx.state === 'running') {
-        audioCtx.suspend().catch(() => {});
-      }
-      if (heroAudio && !heroAudio.paused) {
-        heroAudio.pause();
-      }
+      pauseSound();
     } else {
-      const activeSection = document.querySelector('.page-section.active-section');
-      if (activeSection && activeSection.id === 'about') {
+      if (isAboutActive()) {
         if (heroVideo && heroVideo.paused) heroVideo.play().catch(() => {});
         if (isSoundEnabled) {
           playSoundNow();
